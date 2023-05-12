@@ -108,6 +108,7 @@ class EditableBuilder(Builder):
 
         pth_file = Path(self._module.name).with_suffix(".pth")
         try:
+            self._env.site_packages.path.mkdir(parents=True, exist_ok=True)
             pth_file = self._env.site_packages.write_text(
                 pth_file, content, encoding="utf-8"
             )
@@ -204,7 +205,7 @@ class EditableBuilder(Builder):
                 )
                 shutil.rmtree(str(dist_info))
 
-        dist_info = self._env.site_packages.mkdir(dist_info_path)
+        dist_info = self._env.site_packages.mkdir(dist_info_path, parents=True)
 
         self._debug(
             "  - Adding the <c2>{}</c2> directory to <b>{}</b>".format(
